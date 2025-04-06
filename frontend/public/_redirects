@@ -1,0 +1,5 @@
+# Redirect API requests to specified backend
+/.netlify/functions/api/* https://f1-dashboard-backend.herokuapp.com/:splat 200!
+
+# Serve the SPA for all routes
+/* /index.html 200 

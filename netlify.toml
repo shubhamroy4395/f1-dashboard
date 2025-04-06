@@ -11,12 +11,13 @@
   PYTHON_VERSION = "3.9"
   NODE_VERSION = "18"
 
-# Redirect API requests to serverless functions
+# Redirect API requests to the backend API
 [[redirects]]
   from = "/.netlify/functions/api/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "https://f1-dashboard-backend.herokuapp.com/:splat"
   status = 200
   force = true
+  headers = { Access-Control-Allow-Origin = "*" }
 
 # Serve the SPA for all routes
 [[redirects]]

@@ -67,7 +67,7 @@ function App() {
   // Determine API base URL
   const apiBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:5000' 
-    : '/.netlify/functions/api';
+    : 'https://f1dashboard.netlify.app/.netlify/functions/api';
   
   useEffect(() => {
     const fetchData = async () => {
@@ -76,15 +76,29 @@ function App() {
         // Fetch next race data
         const nextRaceResponse = await fetch(`${apiBaseUrl}/next-race`);
         if (!nextRaceResponse.ok) {
-          throw new Error('Failed to fetch next race data');
+          throw new Error(`Failed to fetch next race data: ${nextRaceResponse.status} ${nextRaceResponse.statusText}`);
         }
+        
+        // Check content-type to ensure we're getting JSON
+        const contentType = nextRaceResponse.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error(`Expected JSON response but got ${contentType || 'unknown format'}`);
+        }
+        
         const nextRaceData = await nextRaceResponse.json();
         
         // Fetch calendar data
         const calendarResponse = await fetch(`${apiBaseUrl}/calendar`);
         if (!calendarResponse.ok) {
-          throw new Error('Failed to fetch calendar data');
+          throw new Error(`Failed to fetch calendar data: ${calendarResponse.status} ${calendarResponse.statusText}`);
         }
+        
+        // Check content-type to ensure we're getting JSON
+        const calendarContentType = calendarResponse.headers.get('content-type');
+        if (!calendarContentType || !calendarContentType.includes('application/json')) {
+          throw new Error(`Expected JSON response but got ${calendarContentType || 'unknown format'}`);
+        }
+        
         const calendarData = await calendarResponse.json();
         
         setNextRace(nextRaceData);
