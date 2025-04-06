@@ -1,33 +1,56 @@
 [build]
-  publish = "/"
-  command = "mkdir -p backend/cache"
+  base = "frontend/"
+  publish = "build/"
+  command = "npm run build"
 
 [functions]
   directory = "backend"
   node_bundler = "esbuild"
 
 [build.environment]
-  PYTHON_VERSION = "3.10"
-  CACHE_DIR = "/tmp/cache"
+  PYTHON_VERSION = "3.9"
+  NODE_VERSION = "18"
 
+# Redirect API requests to serverless functions
 [[redirects]]
-  from = "/calendar"
+  from = "/.netlify/functions/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# Serve the SPA for all routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API redirects to serverless functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api_handler"
+  status = 200
+  force = true
+  
+# All calendar and race endpoints 
+[[redirects]]
+  from = "/calendar*"
   to = "/.netlify/functions/api_handler"
   status = 200
   query = { path = "calendar" }
-
+  
 [[redirects]]
   from = "/next-race"
   to = "/.netlify/functions/api_handler"
   status = 200
   query = { path = "next-race" }
-
+  
 [[redirects]]
   from = "/race/*"
   to = "/.netlify/functions/api_handler"
   status = 200
   query = { path = "race/:splat" }
 
+# Finally, serve index.html for all other paths
 [[redirects]]
   from = "/*"
   to = "/index.html"

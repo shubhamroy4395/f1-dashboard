@@ -1,0 +1,16 @@
+{
+  "name": "f1-dashboard",
+  "version": "1.0.0",
+  "description": "F1 Dashboard using FastF1 API",
+  "main": "index.html",
+  "scripts": {
+    "start": "cd backend && python app.py"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.0.0"
+  }
+} 

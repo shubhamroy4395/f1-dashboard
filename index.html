@@ -186,6 +186,53 @@
             padding-right: 30px;
         }
 
+        .countdown-container {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #999999;
+            margin-bottom: 15px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--f1-red);
+            min-width: 60px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 8px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown-unit {
+            font-size: 0.75rem;
+            color: #bbbbbb;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
         .race-title {
             font-size: 2rem;
             margin-bottom: 10px;
@@ -404,55 +451,39 @@
         .error {
             color: var(--f1-red);
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             font-weight: 600;
-        }
-
-        .countdown-container {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(30, 30, 40, 0.8);
             border-radius: 6px;
-            text-align: center;
+            border-left: 4px solid var(--f1-red);
         }
-
-        .countdown-label {
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #999999;
+        
+        .error h3 {
+            font-size: 1.4rem;
             margin-bottom: 15px;
-        }
-
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .countdown-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .countdown-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--f1-red);
-            min-width: 60px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 4px;
-            padding: 8px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .countdown-unit {
-            font-size: 0.75rem;
-            color: #bbbbbb;
             text-transform: uppercase;
-            margin-top: 5px;
+        }
+        
+        .error p {
+            color: #bbbbbb;
+            margin-bottom: 20px;
+        }
+        
+        .retry-button {
+            background-color: var(--f1-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        
+        .retry-button:hover {
+            background-color: #ff1a1a;
         }
 
         @media (max-width: 768px) {
@@ -513,134 +544,107 @@
     </div>
 
     <script>
-        // Determine the API base URL based on environment
-        const isNetlify = window.location.hostname.includes('netlify.app');
-        const API_BASE_URL = isNetlify ? '' : 'http://localhost:5000';
+        // API URL detection - works both locally and when deployed
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const API_BASE_URL = isLocal ? 'http://localhost:5000' : '';
         
-        // Add debug info to console
-        console.log(`Running on: ${window.location.hostname}`);
-        console.log(`API Base URL: ${API_BASE_URL}`);
-        console.log(`Is Netlify: ${isNetlify}`);
-
-        // Format date string for display
+        // Log for debugging
+        console.log('F1 Dashboard starting with API URL:', API_BASE_URL);
+        
+        // When document is ready, fetch data
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, fetching data...');
+            fetchNextRace();
+            fetchRaceCalendar();
+        });
+        
+        // Format date for display
         function formatDate(dateString, includeYear = true) {
             if (!dateString) return 'TBD';
-            const date = new Date(dateString);
             
-            const options = {
-                day: 'numeric',
-                month: 'long'
-            };
-            
-            if (includeYear) {
-                options.year = 'numeric';
+            try {
+                const date = new Date(dateString);
+                const options = { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric' 
+                };
+                
+                if (includeYear) {
+                    options.year = 'numeric';
+                }
+                
+                return date.toLocaleDateString('en-GB', options);
+            } catch (e) {
+                console.error('Error formatting date:', e);
+                return dateString;
             }
-            
-            return date.toLocaleDateString('en-US', options);
         }
-
-        // Format time string for display
+        
+        // Format time for display
         function formatTime(dateString) {
             if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            });
-        }
-
-        // Check if race is currently ongoing
-        function isRaceOngoing(raceDate) {
-            if (!raceDate) return false;
             
-            const now = new Date();
-            const race = new Date(raceDate);
-            
-            // Get race weekend start date (Thursday before race)
-            const raceWeekendStart = new Date(race);
-            raceWeekendStart.setDate(race.getDate() - 3);
-            
-            // Get race weekend end date (Sunday of race)
-            const raceWeekendEnd = new Date(race);
-            if (race.getDay() !== 0) { // If race is not on Sunday
-                const daysUntilSunday = 7 - race.getDay();
-                raceWeekendEnd.setDate(race.getDate() + daysUntilSunday);
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleTimeString('en-GB', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: false
+                });
+            } catch (e) {
+                console.error('Error formatting time:', e);
+                return '';
             }
-            
-            // Set end of day for end date
-            raceWeekendEnd.setHours(23, 59, 59, 999);
-            
-            return now >= raceWeekendStart && now <= raceWeekendEnd;
         }
-
-        // Calculate time remaining until next race
-        function getTimeRemaining(raceDate) {
+        
+        // Check if race is ongoing
+        function isRaceOngoing(dateString) {
+            if (!dateString) return false;
+            
+            const raceDate = new Date(dateString);
             const now = new Date();
-            const race = new Date(raceDate);
-            const totalSeconds = Math.floor((race - now) / 1000);
             
-            if (totalSeconds <= 0) {
-                return {
-                    days: 0,
-                    hours: 0,
-                    minutes: 0,
-                    seconds: 0,
-                    totalSeconds: 0
-                };
-            }
-            
-            const days = Math.floor(totalSeconds / (3600 * 24));
-            const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = Math.floor(totalSeconds % 60);
-            
-            return {
-                days,
-                hours,
-                minutes,
-                seconds,
-                totalSeconds
-            };
+            // Race is ongoing if it's today
+            return raceDate.toDateString() === now.toDateString();
         }
         
         // Update countdown timer
-        function updateCountdown(raceDate, elementId) {
+        function updateCountdown(targetDateString, elementId) {
+            if (!targetDateString) return;
+            
+            const targetDate = new Date(targetDateString);
             const countdownElement = document.getElementById(elementId);
+            
             if (!countdownElement) return;
             
+            const timerElements = countdownElement.querySelectorAll('.countdown-value');
+            if (timerElements.length < 4) return;
+            
             const updateTimer = () => {
-                const time = getTimeRemaining(raceDate);
+                const now = new Date();
+                const diff = targetDate - now;
                 
-                if (time.totalSeconds <= 0) {
-                    countdownElement.innerHTML = `
-                        <div class="countdown-label">Race Weekend In Progress!</div>
-                        <div style="font-size: 1.5rem; color: #39e600; font-weight: 600;">🏎️ LIVE NOW</div>
-                    `;
+                if (diff <= 0) {
+                    // Race has started
+                    timerElements[0].textContent = '00';
+                    timerElements[1].textContent = '00';
+                    timerElements[2].textContent = '00';
+                    timerElements[3].textContent = '00';
                     return;
                 }
                 
-                countdownElement.innerHTML = `
-                    <div class="countdown-label">Race Countdown</div>
-                    <div class="countdown-timer">
-                        <div class="countdown-item">
-                            <div class="countdown-value">${time.days}</div>
-                            <div class="countdown-unit">Days</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value">${String(time.hours).padStart(2, '0')}</div>
-                            <div class="countdown-unit">Hours</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value">${String(time.minutes).padStart(2, '0')}</div>
-                            <div class="countdown-unit">Mins</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value">${String(time.seconds).padStart(2, '0')}</div>
-                            <div class="countdown-unit">Secs</div>
-                        </div>
-                    </div>
-                `;
+                // Calculate remaining time
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Update display
+                timerElements[0].textContent = days.toString().padStart(2, '0');
+                timerElements[1].textContent = hours.toString().padStart(2, '0');
+                timerElements[2].textContent = minutes.toString().padStart(2, '0');
+                timerElements[3].textContent = seconds.toString().padStart(2, '0');
             };
             
             // Update immediately and then every second
@@ -653,12 +657,39 @@
             const nextRaceElement = document.getElementById('next-race');
             
             try {
-                const response = await fetch(`${API_BASE_URL}/next-race`);
+                console.log('Fetching next race data from:', `${API_BASE_URL}/next-race`);
+                const response = await fetch(`${API_BASE_URL}/next-race`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    const errorData = await response.json();
+                    console.error('API error:', errorData);
+                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || errorData.error || 'Unknown error'}`);
                 }
                 
-                const nextRace = await response.json();
+                const responseText = await response.text();
+                console.log('Raw response text:', responseText);
+                
+                let nextRace;
+                try {
+                    nextRace = JSON.parse(responseText);
+                } catch (jsonError) {
+                    console.error('JSON parse error:', jsonError);
+                    throw new Error(`Failed to parse JSON response: ${jsonError.message}`);
+                }
+                
+                console.log('Next race data parsed:', nextRace);
+                
+                if (!nextRace || !nextRace.name) {
+                    throw new Error('Invalid race data received');
+                }
                 
                 // Create next race card content
                 let content = `
@@ -714,8 +745,12 @@
                 `;
                 
                 // Add session information
-                for (const [sessionKey, sessionDate] of Object.entries(nextRace.sessions)) {
+                const sessions = nextRace.sessions || {};
+                let hasSessionInfo = false;
+                
+                for (const [sessionKey, sessionDate] of Object.entries(sessions)) {
                     if (sessionDate) {
+                        hasSessionInfo = true;
                         const sessionName = sessionKey
                             .replace(/_/g, ' ')
                             .replace(/\b\w/g, l => l.toUpperCase());
@@ -729,6 +764,16 @@
                     }
                 }
                 
+                // If no session info is available
+                if (!hasSessionInfo) {
+                    content += `
+                        <div class="session-item">
+                            <span class="session-name">Session details not available</span>
+                            <span class="session-time">Check back later</span>
+                        </div>
+                    `;
+                }
+                
                 content += `
                         </div>
                     </div>
@@ -737,12 +782,18 @@
                 nextRaceElement.innerHTML = content;
                 
                 // Initialize countdown timer after content is loaded
-                const raceDate = nextRace.sessions.race || nextRace.date;
+                const raceDate = nextRace.sessions?.race || nextRace.date;
                 updateCountdown(raceDate, 'race-countdown');
                 
             } catch (error) {
                 console.error('Error fetching next race:', error);
-                nextRaceElement.innerHTML = `<div class="error">Error loading next race data. Please try again later.</div>`;
+                nextRaceElement.innerHTML = `
+                    <div class="error">
+                        <h3>Error loading next race data</h3>
+                        <p>${error.message}</p>
+                        <button onclick="fetchNextRace()" class="retry-button">Try Again</button>
+                    </div>
+                `;
             }
         }
 
@@ -751,15 +802,38 @@
             const calendarElement = document.getElementById('race-calendar');
             
             try {
-                const response = await fetch(`${API_BASE_URL}/calendar`);
+                console.log('Fetching calendar data from:', `${API_BASE_URL}/calendar`);
+                const response = await fetch(`${API_BASE_URL}/calendar`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    const errorData = await response.json();
+                    console.error('API error:', errorData);
+                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorData.message || errorData.error || 'Unknown error'}`);
                 }
                 
-                const calendarData = await response.json();
+                const responseText = await response.text();
+                console.log('Raw response text (first 100 chars):', responseText.substring(0, 100) + '...');
+                
+                let calendarData;
+                try {
+                    calendarData = JSON.parse(responseText);
+                } catch (jsonError) {
+                    console.error('JSON parse error:', jsonError);
+                    throw new Error(`Failed to parse JSON response: ${jsonError.message}`);
+                }
+                
+                console.log('Calendar data parsed, race count:', calendarData.races?.length);
                 
                 if (!calendarData.races || calendarData.races.length === 0) {
-                    calendarElement.innerHTML = '<div class="error">No races found in the calendar.</div>';
+                    calendarElement.innerHTML = '<div class="error"><h3>No races found in the calendar</h3><p>The calendar appears to be empty.</p></div>';
                     return;
                 }
                 
@@ -767,6 +841,11 @@
                 const races = calendarData.races
                     .filter(race => race.round)
                     .sort((a, b) => a.round - b.round);
+                
+                if (races.length === 0) {
+                    calendarElement.innerHTML = '<div class="error"><h3>No valid races found</h3><p>There are no races with round numbers in the calendar.</p></div>';
+                    return;
+                }
                 
                 // Create table for race calendar
                 let content = `
@@ -828,15 +907,15 @@
                 
             } catch (error) {
                 console.error('Error fetching race calendar:', error);
-                calendarElement.innerHTML = `<div class="error">Error loading calendar data. Please try again later.</div>`;
+                calendarElement.innerHTML = `
+                    <div class="error">
+                        <h3>Error loading calendar data</h3>
+                        <p>${error.message}</p>
+                        <button onclick="fetchRaceCalendar()" class="retry-button">Try Again</button>
+                    </div>
+                `;
             }
         }
-
-        // Initialize the dashboard
-        window.onload = function() {
-            fetchNextRace();
-            fetchRaceCalendar();
-        };
     </script>
 </body>
-</html> 
+</html>
