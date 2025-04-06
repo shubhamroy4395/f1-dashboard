@@ -408,6 +408,53 @@
             font-weight: 600;
         }
 
+        .countdown-container {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .countdown-label {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #999999;
+            margin-bottom: 15px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--f1-red);
+            min-width: 60px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 8px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown-unit {
+            font-size: 0.75rem;
+            color: #bbbbbb;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
@@ -522,6 +569,80 @@
             return now >= raceWeekendStart && now <= raceWeekendEnd;
         }
 
+        // Calculate time remaining until next race
+        function getTimeRemaining(raceDate) {
+            const now = new Date();
+            const race = new Date(raceDate);
+            const totalSeconds = Math.floor((race - now) / 1000);
+            
+            if (totalSeconds <= 0) {
+                return {
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                    totalSeconds: 0
+                };
+            }
+            
+            const days = Math.floor(totalSeconds / (3600 * 24));
+            const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            
+            return {
+                days,
+                hours,
+                minutes,
+                seconds,
+                totalSeconds
+            };
+        }
+        
+        // Update countdown timer
+        function updateCountdown(raceDate, elementId) {
+            const countdownElement = document.getElementById(elementId);
+            if (!countdownElement) return;
+            
+            const updateTimer = () => {
+                const time = getTimeRemaining(raceDate);
+                
+                if (time.totalSeconds <= 0) {
+                    countdownElement.innerHTML = `
+                        <div class="countdown-label">Race Weekend In Progress!</div>
+                        <div style="font-size: 1.5rem; color: #39e600; font-weight: 600;">🏎️ LIVE NOW</div>
+                    `;
+                    return;
+                }
+                
+                countdownElement.innerHTML = `
+                    <div class="countdown-label">Race Countdown</div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <div class="countdown-value">${time.days}</div>
+                            <div class="countdown-unit">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value">${String(time.hours).padStart(2, '0')}</div>
+                            <div class="countdown-unit">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value">${String(time.minutes).padStart(2, '0')}</div>
+                            <div class="countdown-unit">Mins</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value">${String(time.seconds).padStart(2, '0')}</div>
+                            <div class="countdown-unit">Secs</div>
+                        </div>
+                    </div>
+                `;
+            };
+            
+            // Update immediately and then every second
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
         // Fetch next race data
         async function fetchNextRace() {
             const nextRaceElement = document.getElementById('next-race');
@@ -558,6 +679,28 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <div id="race-countdown" class="countdown-container">
+                            <div class="countdown-label">Race Countdown</div>
+                            <div class="countdown-timer">
+                                <div class="countdown-item">
+                                    <div class="countdown-value">--</div>
+                                    <div class="countdown-unit">Days</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-value">--</div>
+                                    <div class="countdown-unit">Hours</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-value">--</div>
+                                    <div class="countdown-unit">Mins</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-value">--</div>
+                                    <div class="countdown-unit">Secs</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="session-schedule">
@@ -587,6 +730,10 @@
                 `;
                 
                 nextRaceElement.innerHTML = content;
+                
+                // Initialize countdown timer after content is loaded
+                const raceDate = nextRace.sessions.race || nextRace.date;
+                updateCountdown(raceDate, 'race-countdown');
                 
             } catch (error) {
                 console.error('Error fetching next race:', error);
