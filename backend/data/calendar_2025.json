@@ -1,0 +1,452 @@
+[
+  {
+    "round": 0,
+    "name": "Pre-Season Testing",
+    "circuit": "Sakhir",
+    "country": "Bahrain",
+    "date": "2025-02-28",
+    "status": "completed",
+    "format": "testing",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-02-26 10:00:00",
+      "fp2": "2025-02-27 10:00:00",
+      "fp3": "2025-02-28 10:00:00",
+      "qualifying": null,
+      "sprint": null,
+      "race": "2025-02-28 00:00:00"
+    }
+  },
+  {
+    "round": 1,
+    "name": "Australian Grand Prix",
+    "circuit": "Melbourne",
+    "country": "Australia",
+    "date": "2025-03-16",
+    "status": "completed",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-03-14 12:30:00",
+      "fp2": "2025-03-14 16:00:00",
+      "fp3": "2025-03-15 12:30:00",
+      "qualifying": "2025-03-15 16:00:00",
+      "sprint": null,
+      "race": "2025-03-16 00:00:00"
+    }
+  },
+  {
+    "round": 2,
+    "name": "Chinese Grand Prix",
+    "circuit": "Shanghai",
+    "country": "China",
+    "date": "2025-03-23",
+    "status": "completed",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-03-21 11:30:00",
+      "fp2": "2025-03-21 15:30:00",
+      "fp3": "2025-03-22 11:00:00",
+      "qualifying": "2025-03-22 15:00:00",
+      "sprint": "2025-03-23 15:00:00",
+      "race": "2025-03-23 00:00:00"
+    }
+  },
+  {
+    "round": 3,
+    "name": "Japanese Grand Prix",
+    "circuit": "Suzuka",
+    "country": "Japan",
+    "date": "2025-04-06",
+    "status": "completed",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-04-04 11:30:00",
+      "fp2": "2025-04-04 15:00:00",
+      "fp3": "2025-04-05 11:30:00",
+      "qualifying": "2025-04-05 15:00:00",
+      "sprint": null,
+      "race": "2025-04-06 00:00:00"
+    }
+  },
+  {
+    "round": 4,
+    "name": "Bahrain Grand Prix",
+    "circuit": "Sakhir",
+    "country": "Bahrain",
+    "date": "2025-04-13",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-04-11 14:30:00",
+      "fp2": "2025-04-11 18:00:00",
+      "fp3": "2025-04-12 15:30:00",
+      "qualifying": "2025-04-12 19:00:00",
+      "sprint": null,
+      "race": "2025-04-13 00:00:00"
+    }
+  },
+  {
+    "round": 5,
+    "name": "Saudi Arabian Grand Prix",
+    "circuit": "Jeddah",
+    "country": "Saudi Arabia",
+    "date": "2025-04-20",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-04-18 16:30:00",
+      "fp2": "2025-04-18 20:00:00",
+      "fp3": "2025-04-19 16:30:00",
+      "qualifying": "2025-04-19 20:00:00",
+      "sprint": null,
+      "race": "2025-04-20 00:00:00"
+    }
+  },
+  {
+    "round": 6,
+    "name": "Miami Grand Prix",
+    "circuit": "Miami",
+    "country": "United States",
+    "date": "2025-05-04",
+    "status": "upcoming",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-05-02 12:30:00",
+      "fp2": "2025-05-02 16:30:00",
+      "fp3": "2025-05-03 12:00:00",
+      "qualifying": "2025-05-03 16:00:00",
+      "sprint": "2025-05-04 16:00:00",
+      "race": "2025-05-04 00:00:00"
+    }
+  },
+  {
+    "round": 7,
+    "name": "Emilia Romagna Grand Prix",
+    "circuit": "Imola",
+    "country": "Italy",
+    "date": "2025-05-18",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-05-16 13:30:00",
+      "fp2": "2025-05-16 17:00:00",
+      "fp3": "2025-05-17 12:30:00",
+      "qualifying": "2025-05-17 16:00:00",
+      "sprint": null,
+      "race": "2025-05-18 00:00:00"
+    }
+  },
+  {
+    "round": 8,
+    "name": "Monaco Grand Prix",
+    "circuit": "Monaco",
+    "country": "Monaco",
+    "date": "2025-05-25",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-05-23 13:30:00",
+      "fp2": "2025-05-23 17:00:00",
+      "fp3": "2025-05-24 12:30:00",
+      "qualifying": "2025-05-24 16:00:00",
+      "sprint": null,
+      "race": "2025-05-25 00:00:00"
+    }
+  },
+  {
+    "round": 9,
+    "name": "Spanish Grand Prix",
+    "circuit": "Barcelona",
+    "country": "Spain",
+    "date": "2025-06-01",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-05-30 13:30:00",
+      "fp2": "2025-05-30 17:00:00",
+      "fp3": "2025-05-31 12:30:00",
+      "qualifying": "2025-05-31 16:00:00",
+      "sprint": null,
+      "race": "2025-06-01 00:00:00"
+    }
+  },
+  {
+    "round": 10,
+    "name": "Canadian Grand Prix",
+    "circuit": "Montr\u00e9al",
+    "country": "Canada",
+    "date": "2025-06-15",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-06-13 13:30:00",
+      "fp2": "2025-06-13 17:00:00",
+      "fp3": "2025-06-14 12:30:00",
+      "qualifying": "2025-06-14 16:00:00",
+      "sprint": null,
+      "race": "2025-06-15 00:00:00"
+    }
+  },
+  {
+    "round": 11,
+    "name": "Austrian Grand Prix",
+    "circuit": "Spielberg",
+    "country": "Austria",
+    "date": "2025-06-29",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-06-27 13:30:00",
+      "fp2": "2025-06-27 17:00:00",
+      "fp3": "2025-06-28 12:30:00",
+      "qualifying": "2025-06-28 16:00:00",
+      "sprint": null,
+      "race": "2025-06-29 00:00:00"
+    }
+  },
+  {
+    "round": 12,
+    "name": "British Grand Prix",
+    "circuit": "Silverstone",
+    "country": "United Kingdom",
+    "date": "2025-07-06",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-07-04 12:30:00",
+      "fp2": "2025-07-04 16:00:00",
+      "fp3": "2025-07-05 11:30:00",
+      "qualifying": "2025-07-05 15:00:00",
+      "sprint": null,
+      "race": "2025-07-06 00:00:00"
+    }
+  },
+  {
+    "round": 13,
+    "name": "Belgian Grand Prix",
+    "circuit": "Spa-Francorchamps",
+    "country": "Belgium",
+    "date": "2025-07-27",
+    "status": "upcoming",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-07-25 12:30:00",
+      "fp2": "2025-07-25 16:30:00",
+      "fp3": "2025-07-26 12:00:00",
+      "qualifying": "2025-07-26 16:00:00",
+      "sprint": "2025-07-27 15:00:00",
+      "race": "2025-07-27 00:00:00"
+    }
+  },
+  {
+    "round": 14,
+    "name": "Hungarian Grand Prix",
+    "circuit": "Budapest",
+    "country": "Hungary",
+    "date": "2025-08-03",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-08-01 13:30:00",
+      "fp2": "2025-08-01 17:00:00",
+      "fp3": "2025-08-02 12:30:00",
+      "qualifying": "2025-08-02 16:00:00",
+      "sprint": null,
+      "race": "2025-08-03 00:00:00"
+    }
+  },
+  {
+    "round": 15,
+    "name": "Dutch Grand Prix",
+    "circuit": "Zandvoort",
+    "country": "Netherlands",
+    "date": "2025-08-31",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-08-29 12:30:00",
+      "fp2": "2025-08-29 16:00:00",
+      "fp3": "2025-08-30 11:30:00",
+      "qualifying": "2025-08-30 15:00:00",
+      "sprint": null,
+      "race": "2025-08-31 00:00:00"
+    }
+  },
+  {
+    "round": 16,
+    "name": "Italian Grand Prix",
+    "circuit": "Monza",
+    "country": "Italy",
+    "date": "2025-09-07",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-09-05 13:30:00",
+      "fp2": "2025-09-05 17:00:00",
+      "fp3": "2025-09-06 12:30:00",
+      "qualifying": "2025-09-06 16:00:00",
+      "sprint": null,
+      "race": "2025-09-07 00:00:00"
+    }
+  },
+  {
+    "round": 17,
+    "name": "Azerbaijan Grand Prix",
+    "circuit": "Baku",
+    "country": "Azerbaijan",
+    "date": "2025-09-21",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-09-19 12:30:00",
+      "fp2": "2025-09-19 16:00:00",
+      "fp3": "2025-09-20 12:30:00",
+      "qualifying": "2025-09-20 16:00:00",
+      "sprint": null,
+      "race": "2025-09-21 00:00:00"
+    }
+  },
+  {
+    "round": 18,
+    "name": "Singapore Grand Prix",
+    "circuit": "Marina Bay",
+    "country": "Singapore",
+    "date": "2025-10-05",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-10-03 17:30:00",
+      "fp2": "2025-10-03 21:00:00",
+      "fp3": "2025-10-04 17:30:00",
+      "qualifying": "2025-10-04 21:00:00",
+      "sprint": null,
+      "race": "2025-10-05 00:00:00"
+    }
+  },
+  {
+    "round": 19,
+    "name": "United States Grand Prix",
+    "circuit": "Austin",
+    "country": "United States",
+    "date": "2025-10-19",
+    "status": "upcoming",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-10-17 12:30:00",
+      "fp2": "2025-10-17 16:30:00",
+      "fp3": "2025-10-18 12:00:00",
+      "qualifying": "2025-10-18 16:00:00",
+      "sprint": "2025-10-19 14:00:00",
+      "race": "2025-10-19 00:00:00"
+    }
+  },
+  {
+    "round": 20,
+    "name": "Mexico City Grand Prix",
+    "circuit": "Mexico City",
+    "country": "Mexico",
+    "date": "2025-10-26",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-10-24 12:30:00",
+      "fp2": "2025-10-24 16:00:00",
+      "fp3": "2025-10-25 11:30:00",
+      "qualifying": "2025-10-25 15:00:00",
+      "sprint": null,
+      "race": "2025-10-26 00:00:00"
+    }
+  },
+  {
+    "round": 21,
+    "name": "S\u00e3o Paulo Grand Prix",
+    "circuit": "S\u00e3o Paulo",
+    "country": "Brazil",
+    "date": "2025-11-09",
+    "status": "upcoming",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-11-07 11:30:00",
+      "fp2": "2025-11-07 15:30:00",
+      "fp3": "2025-11-08 11:00:00",
+      "qualifying": "2025-11-08 15:00:00",
+      "sprint": "2025-11-09 14:00:00",
+      "race": "2025-11-09 00:00:00"
+    }
+  },
+  {
+    "round": 22,
+    "name": "Las Vegas Grand Prix",
+    "circuit": "Las Vegas",
+    "country": "United States",
+    "date": "2025-11-22",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-11-20 16:30:00",
+      "fp2": "2025-11-20 20:00:00",
+      "fp3": "2025-11-21 16:30:00",
+      "qualifying": "2025-11-21 20:00:00",
+      "sprint": null,
+      "race": "2025-11-22 00:00:00"
+    }
+  },
+  {
+    "round": 23,
+    "name": "Qatar Grand Prix",
+    "circuit": "Lusail",
+    "country": "Qatar",
+    "date": "2025-11-30",
+    "status": "upcoming",
+    "format": "sprint_qualifying",
+    "is_sprint_weekend": true,
+    "session_dates": {
+      "fp1": "2025-11-28 16:30:00",
+      "fp2": "2025-11-28 20:30:00",
+      "fp3": "2025-11-29 17:00:00",
+      "qualifying": "2025-11-29 21:00:00",
+      "sprint": "2025-11-30 19:00:00",
+      "race": "2025-11-30 00:00:00"
+    }
+  },
+  {
+    "round": 24,
+    "name": "Abu Dhabi Grand Prix",
+    "circuit": "Yas Island",
+    "country": "United Arab Emirates",
+    "date": "2025-12-07",
+    "status": "upcoming",
+    "format": "conventional",
+    "is_sprint_weekend": false,
+    "session_dates": {
+      "fp1": "2025-12-05 13:30:00",
+      "fp2": "2025-12-05 17:00:00",
+      "fp3": "2025-12-06 14:30:00",
+      "qualifying": "2025-12-06 18:00:00",
+      "sprint": null,
+      "race": "2025-12-07 00:00:00"
+    }
+  }
+]

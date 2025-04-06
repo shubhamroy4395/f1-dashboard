@@ -1,0 +1,26 @@
+[build]
+  publish = "/"
+  command = "cd backend && pip install -r requirements.txt"
+
+[functions]
+  directory = "backend"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/calendar"
+  to = "/.netlify/functions/api_handler?path=calendar"
+  status = 200
+
+[[redirects]]
+  from = "/next-race"
+  to = "/.netlify/functions/api_handler?path=next-race"
+  status = 200
+
+[[redirects]]
+  from = "/race/*"
+  to = "/.netlify/functions/api_handler?path=race/:splat"
+  status = 200 
