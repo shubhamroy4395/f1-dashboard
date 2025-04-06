@@ -515,7 +515,12 @@
     <script>
         // Determine the API base URL based on environment
         const isNetlify = window.location.hostname.includes('netlify.app');
-        const API_BASE_URL = isNetlify ? window.location.origin : 'http://localhost:5000';
+        const API_BASE_URL = isNetlify ? '' : 'http://localhost:5000';
+        
+        // Add debug info to console
+        console.log(`Running on: ${window.location.hostname}`);
+        console.log(`API Base URL: ${API_BASE_URL}`);
+        console.log(`Is Netlify: ${isNetlify}`);
 
         // Format date string for display
         function formatDate(dateString, includeYear = true) {
